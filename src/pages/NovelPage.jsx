@@ -29,7 +29,7 @@ const NovelPage = () => {
   useEffect(() => {
     fetch("message.txt")
       .then((response) => response.text())
-      .then((data) => setTextContent(data))
+      .then((data) => setTextContent(data.replace(/<br\/>/g, "\n")))
       .catch((error) => console.error("Error loading text file:", error));
   }, []);
 
@@ -50,7 +50,7 @@ const NovelPage = () => {
   return (
     <div style={containerStyle}>
       <div style={verticalTextStyle}>
-        {animatedText.split("<br/>").map((line, index) => (
+        {animatedText.split("\n").map((line, index) => (
           <React.Fragment key={index}>
             {line}
             <br />
