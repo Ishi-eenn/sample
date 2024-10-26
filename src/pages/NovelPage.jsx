@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 
 const containerStyle = {
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "center", // 中央寄せ
   alignItems: "flex-start",
   minHeight: "100vh",
-  width: "auto",
+  width: "fit-content", // 自動幅調整
+  margin: "0 auto", // コンテナを中央寄せ
   padding: "20px",
 };
 
@@ -16,7 +17,6 @@ const verticalTextStyle = {
   lineHeight: "2",
   maxHeight: "calc(100vh - 40px)",
   overflowY: "auto",
-  margin: "0",
   textAlign: "left",
   fontSize: "2rem",
   fontWeight: "400",
