@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 const containerStyle = {
-  display: "flex",
   justifyContent: "center", // 中央寄せ
   alignItems: "flex-start",
   minHeight: "100vh",
