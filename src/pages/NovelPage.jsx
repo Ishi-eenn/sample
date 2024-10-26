@@ -18,7 +18,7 @@ const verticalTextStyle = {
   overflowY: "auto",
   margin: "0 auto 0 0",
   textAlign: "left",
-  fontSize: "1.5rem",
+  fontSize: "2rem",
   fontWeight: "400",
   letterSpacing: "0.05em",
 };
