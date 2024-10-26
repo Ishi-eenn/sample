@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 const containerStyle = {
-  justifyContent: "center", // 中央寄せ
+  justifyContent: "center",
   alignItems: "flex-start",
   minHeight: "100vh",
-  width: "fit-content", // 自動幅調整
-  margin: "0 auto", // コンテナを中央寄せ
+  width: "fit-content",
+  margin: "0 auto",
   padding: "20px",
 };
 
@@ -24,18 +24,33 @@ const verticalTextStyle = {
 
 const NovelPage = () => {
   const [textContent, setTextContent] = useState("");
+  const [animatedText, setAnimatedText] = useState("");
 
   useEffect(() => {
-    fetch("/message.txt")
+    fetch("message.txt")
       .then((response) => response.text())
       .then((data) => setTextContent(data))
       .catch((error) => console.error("Error loading text file:", error));
   }, []);
 
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < textContent.length) {
+        setAnimatedText((prev) => prev + textContent[index]);
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [textContent]);
+
   return (
     <div style={containerStyle}>
       <div style={verticalTextStyle}>
-        {textContent.split("<br/>").map((line, index) => (
+        {animatedText.split("<br/>").map((line, index) => (
           <React.Fragment key={index}>
             {line}
             <br />
