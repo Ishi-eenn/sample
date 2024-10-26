@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 
 const containerStyle = {
   display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "flex-start",
+  justifyContent: "center", // Center content horizontally
+  alignItems: "center", // Center content vertically
   minHeight: "100vh",
   width: "100%",
   padding: "20px",
+  overflow: "hidden", // Hide any overflow
 };
 
 const verticalTextStyle = {
@@ -14,13 +15,14 @@ const verticalTextStyle = {
   textOrientation: "upright",
   whiteSpace: "pre-wrap",
   lineHeight: "2",
-  maxHeight: "calc(100vh - 40px)",
+  maxHeight: "100%", // Use full height of the container
   overflowY: "auto",
-  margin: "0 auto 0 0",
-  textAlign: "left",
+  textAlign: "center", // Center align text horizontally within its container
   fontSize: "2rem",
   fontWeight: "400",
   letterSpacing: "0.05em",
+  padding: "0", // Remove any padding
+  margin: "0", // Remove any margin
 };
 
 const NovelPage = () => {
