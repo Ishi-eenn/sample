@@ -50,8 +50,8 @@ const NovelPage = () => {
   return (
     <div style={containerStyle}>
       <div style={verticalTextStyle}>
-        {animatedText.split("\n").map((line, index) => (
-          <React.Fragment key={index}>
+        {animatedText.split("\n").map((line, idx) => (
+          <React.Fragment key={idx}>
             {line}
             <br />
           </React.Fragment>
