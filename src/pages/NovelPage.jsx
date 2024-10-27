@@ -50,61 +50,43 @@
 
 import React, { useState, useEffect } from "react";
 
-const AnimatedNovelPage = () => {
+const NovelPage = () => {
   const [textContent, setTextContent] = useState("");
   const [displayedText, setDisplayedText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(true);
 
-  // スタイル定義
-  const containerStyle = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    minHeight: "100vh",
-    width: "auto",
-    padding: "20px",
-  };
-
-  const verticalTextStyle = {
-    writingMode: "vertical-rl",
-    textOrientation: "upright",
-    whiteSpace: "pre-wrap",
-    lineHeight: "2",
-    maxHeight: "calc(100vh - 40px)",
-    overflowY: "auto",
-    margin: "0",
-    textAlign: "left",
-    fontSize: "2rem",
-    fontWeight: "400",
-    letterSpacing: "0.05em",
-  };
-
-  // テキストファイルの読み込み
+  // テキストを読み込む
   useEffect(() => {
     fetch("/message.txt")
       .then((response) => response.text())
-      .then((data) => {
-        setTextContent(data.replace(/<br\/>/g, "\n"));
-      })
+      .then((data) => setTextContent(data))
       .catch((error) => console.error("Error loading text file:", error));
   }, []);
 
-  // 文字のアニメーション処理
+  // アニメーション効果
   useEffect(() => {
-    if (textContent && currentIndex < textContent.length) {
-      const timer = setTimeout(() => {
-        setDisplayedText((prev) => prev + textContent[currentIndex]);
-        setCurrentIndex((prev) => prev + 1);
-      }, 50); // 50ミリ秒ごとに1文字表示
+    if (!textContent || !isAnimating) return;
 
-      return () => clearTimeout(timer);
-    }
-  }, [textContent, currentIndex]);
+    let currentIndex = 0;
+    const characters = textContent.split("");
+
+    const animationInterval = setInterval(() => {
+      if (currentIndex < characters.length) {
+        setDisplayedText((prev) => prev + characters[currentIndex]);
+        currentIndex++;
+      } else {
+        clearInterval(animationInterval);
+        setIsAnimating(false);
+      }
+    }, 50); // 表示速度（ミリ秒）
+
+    return () => clearInterval(animationInterval);
+  }, [textContent, isAnimating]);
 
   return (
-    <div style={containerStyle}>
-      <div style={verticalTextStyle}>
-        {displayedText.split("\n").map((line, index) => (
+    <div className="flex justify-center items-start min-h-screen p-5">
+      <div className="writing-vertical-rl whitespace-pre-wrap leading-loose max-h-[calc(100vh-40px)] overflow-y-auto m-0 text-left text-2xl font-normal tracking-wider">
+        {displayedText.split("<br/>").map((line, index) => (
           <React.Fragment key={index}>
             {line}
             <br />
@@ -115,4 +97,4 @@ const AnimatedNovelPage = () => {
   );
 };
 
-export default AnimatedNovelPage;
+export default NovelPage;
